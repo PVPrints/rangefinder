@@ -2,18 +2,18 @@
 
 Servo rangefinder;
 
-#define BUTTON_PIN 2
-#define BLINKER_PIN_0 3
-#define BLINKER_PIN_1 4
-#define SCREEN_PIN 5
-#define BUTTON_READY_PIN 6
-#define RF_PIN 9
+const int BUTTON_PIN = 2;
+const int BLINKER_PIN_0 = 3;
+const int BLINKER_PIN_1 = 4;
+const int SCREEN_PIN = 5;
+const int BUTTON_READY_PIN = 6;
+const int RF_PIN = 9;
 const int RF_UP_ANGLE = 100;
 const int RF_DOWN_ANGLE = 0;
 
-#define BLINKER_INTERVAL 250
-#define BUTTON_TIMEOUT 1000
-#define RF_TIMEOUT 15000
+const int BLINKER_INTERVAL = 250;
+const int BUTTON_TIMEOUT = 1000;
+const int RF_TIMEOUT = 15000;
 
 int val = 0;
 int buttonState = 0;
