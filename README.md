@@ -2,7 +2,7 @@
 
 ## What is it?
 
-It's a collection of Arduino code to drive a servo and LEDs for a helmet-mounted rangefinder on prop/cosplay helmets - namely, those replicating the helmet worn by a certain character played by Temeura Morrison in a certain digitally-streamed science fiction television show.
+It's a collection of Arduino code to drive a servo and LEDs for a helmet-mounted rangefinder on prop/cosplay helmets - namely, those replicating the helmet worn by a certain character played by Temuera Morrison in a certain digitally-streamed science fiction television show.
 
 ## How do I use it?
 
