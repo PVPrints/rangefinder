@@ -3,9 +3,11 @@
 #include "Blinkenlights.h"
 #include "Screen.h"
 
-const byte ACTIVATOR_SWITCH_PIN = 2;
+const byte ACTIVATOR_AIMING_PIN = 2;
+const byte ACTIVATOR_FLASHLIGHT_PIN = 7;
 const byte BLINKEN_TOP_PIN = 3;
 const byte BLINKEN_BOTTOM_PIN = 4;
+const byte BLINKEN_FLASHLIGHT_PIN = 6;
 const byte SCREEN_PIN = 5;
 const byte MAST_SERVO_PIN = 9;
 
@@ -17,7 +19,8 @@ const unsigned long MAST_TIMEOUT = 15000;
 const unsigned long BLINKEN_INTERVAL = 250;
 
 Activator activator(
-  ACTIVATOR_SWITCH_PIN,
+  ACTIVATOR_AIMING_PIN,
+  ACTIVATOR_FLASHLIGHT_PIN,
   ACTIVATOR_TIMEOUT
 );
 Mast mast(
@@ -29,6 +32,7 @@ Mast mast(
 Blinkenlights blinkenlights(
   BLINKEN_TOP_PIN,
   BLINKEN_BOTTOM_PIN,
+  BLINKEN_FLASHLIGHT_PIN,
   BLINKEN_INTERVAL
 );
 Screen screen(SCREEN_PIN);
@@ -48,7 +52,7 @@ void setup()
 void loop()
 {
   aState = activator.tick();
-  if (aState == ACTIVATOR_FIRING) {
+  if (aState == ACTIVATOR_AIMING || aState == ACTIVATOR_FLASHLIGHT) {
     shouldToggle = true;
   } else {
     shouldToggle = false;

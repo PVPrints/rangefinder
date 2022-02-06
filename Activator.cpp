@@ -1,11 +1,13 @@
 #include "Activator.h"
 
-Activator::Activator(byte pin, unsigned long timeout)
+Activator::Activator(byte aim_pin, byte flashlight_pin, unsigned long timeout)
 {
-  _pin = pin;
+  _aim_pin = aim_pin;
+  _flashlight_pin = flashlight_pin;
   _timeout = timeout;
   _state = ACTIVATOR_READY;
-  pinMode(_pin, INPUT_PULLUP);
+  pinMode(_aim_pin, INPUT_PULLUP);
+  pinMode(_flashlight_pin, INPUT_PULLUP);
 }
 
 ActivatorState Activator::tick()
@@ -14,8 +16,11 @@ ActivatorState Activator::tick()
     case ACTIVATOR_READY:
       return whenReady();
       break;
-    case ACTIVATOR_FIRING:
-      return whenFiring();
+    case ACTIVATOR_AIMING:
+      return whenAiming();
+      break;
+    case ACTIVATOR_FLASHLIGHT:
+      return whenFlashlight();
       break;
     case ACTIVATOR_MUTED:
       return whenMuted();
@@ -26,13 +31,23 @@ ActivatorState Activator::tick()
 ActivatorState Activator::whenReady()
 {
   /* LOW == pressed, HIGH == not pressed; thanks, pullup! */
-  if (digitalRead(_pin) == LOW) {
-    _state = ACTIVATOR_FIRING;
+  if (digitalRead(_aim_pin) == LOW) {
+    _state = ACTIVATOR_AIMING;
+  }
+  if (digitalRead(_flashlight_pin) == LOW) {
+    _state = ACTIVATOR_FLASHLIGHT;
   }
   return _state;
 }
 
-ActivatorState Activator::whenFiring()
+ActivatorState Activator::whenAiming()
+{
+  _muteUntil = millis() + _timeout;
+  _state = ACTIVATOR_MUTED;
+  return _state;
+}
+
+ActivatorState Activator::whenFlashlight()
 {
   _muteUntil = millis() + _timeout;
   _state = ACTIVATOR_MUTED;

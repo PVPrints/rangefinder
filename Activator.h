@@ -3,21 +3,32 @@
 
 #include <Arduino.h>
 
-enum ActivatorState { ACTIVATOR_READY, ACTIVATOR_FIRING, ACTIVATOR_MUTED };
+enum ActivatorState {
+  ACTIVATOR_READY,
+  ACTIVATOR_AIMING,
+  ACTIVATOR_FLASHLIGHT,
+  ACTIVATOR_MUTED
+};
 
 class Activator
 {
   public:
-    Activator(byte pin, unsigned long timeout);
+    Activator(
+      byte aim_pin,
+      byte flashlight_pin,
+      unsigned long timeout
+    );
     ActivatorState tick();
     
   private:
     ActivatorState _state;
     unsigned long _muteUntil;
-    byte _pin;
+    byte _aim_pin;
+    byte _flashlight_pin;
     unsigned long _timeout;
     ActivatorState whenReady();
-    ActivatorState whenFiring();
+    ActivatorState whenAiming();
+    ActivatorState whenFlashlight();
     ActivatorState whenMuted();
 };
 
